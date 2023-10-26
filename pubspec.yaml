@@ -49,7 +49,7 @@ dependencies:
   unsplash_client: ^2.1.1
   cached_network_image: ^3.3.0
   sqflite: ^2.3.0
-  blurhash: ^1.1.1
+  flutter_blurhash: ^0.7.0
 
 dev_dependencies:
   flutter_test:

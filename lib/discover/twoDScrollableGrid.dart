@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:unsplash_client/unsplash_client.dart';
 
 import '../widgets/card.dart';
@@ -230,6 +231,10 @@ class _MatrixMatchState extends State<MatrixMatch> {
                             width: imgSize.width,
                             child: CachedNetworkImage(
                               imageUrl: numbers.elementAt(i),
+                              placeholder: (context, url) {
+                                return BlurHash(
+                                    hash: "L5H2EC=PM+yV0g-mq.wG9c010J}I");
+                              },
                               fit: BoxFit.cover,
                             ),
                             decoration: BoxDecoration(
