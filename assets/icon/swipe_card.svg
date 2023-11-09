@@ -1,0 +1,16 @@
+<svg width="511" height="512" xmlns="http://www.w3.org/2000/svg">
+ <title>swipe_card</title>
+
+ <g>
+  <title>Layer 1</title>
+  <rect opacity="0" id="svg_1" height="289.99326" width="193.32884" y="118.3236" x="142.76516" stroke="#000" fill="#fff"/>
+  <path id="svg_2" d="m-262.56761,66.23348l3.18302,0l0.98358,-3.18297l0.98358,3.18297l3.18302,0l-2.57511,1.96716l0.98363,3.18297l-2.57511,-1.96722l-2.57511,1.96722l0.98363,-3.18297l-2.57511,-1.96716z" stroke="#000" fill="#fff"/>
+  <rect stroke="#000" rx="22" id="svg_4" height="271.66035" width="168.32942" y="124.54671" x="178.83508" fill="#fff"/>
+  <rect stroke="#000" rx="22" id="svg_5" height="329.99233" width="201.66199" y="67.88135" x="-317.82004" fill="#fff"/>
+  <rect stroke="#000" rx="22" id="svg_8" height="334.99221" width="213.32837" y="109.54704" x="-424.48421" fill="#fff"/>
+  <rect stroke="#000" rx="22" id="svg_9" height="334.99221" width="213.32837" y="-157.11343" x="-241.15516" fill="#fff"/>
+  <rect stroke="#000" rx="22" id="svg_10" height="334.99221" width="213.32837" y="609.53558" x="72.17086" fill="#fff"/>
+  <rect transform="rotate(6 385.497 263.71)" stroke="#000" rx="22" id="svg_11" height="258.20731" width="140.49876" y="134.60648" x="315.24757" fill="#fff"/>
+  <rect transform="rotate(-6 145.503 265.377)" stroke="#000" rx="22" id="svg_12" height="258.20731" width="140.49876" y="136.27311" x="75.25313" fill="#fff"/>
+ </g>
+</svg>

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlify/constants/constants.dart';
-import 'package:nightlify/login/login.dart';
+import 'package:nightlify/auth/login.dart';
 import 'package:nightlify/widgets/navigation.dart';
 import 'package:nightlify/widgets/shapes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+
+int state = 0;
 
 class InitClass extends StatefulWidget {
   const InitClass({super.key});
@@ -24,75 +28,62 @@ class _InitClassState extends State<InitClass> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPressDown: (details) {
-        print(details.localPosition);
         final Offset det = details.globalPosition;
 
         starDx = det.dx / Constants.w;
         starDy = det.dy / Constants.h;
         setState(() {});
-        print(starDy);
-        print(starDx);
       },
-      child: Scaffold(
-          backgroundColor: Constants.appBlack,
-          body: SafeArea(
-              child: Container(
-            height: Constants.h,
-            width: Constants.w,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                  Constants.appLightGrey,
-                  Constants.appBlack,
-                  Constants.appBlack
-                ])),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 8, 8, 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      animatedStars(starDx, starDy),
-                      Animate(
-                        effects: [
-                          FadeEffect(
-                              begin: 0.0,
-                              end: 1.0,
-                              duration: Duration(seconds: 1)),
-                        ],
-                        child: Text(
+      child: Animate(
+        effects: [
+          FadeEffect(begin: 0.0, end: 1.0, duration: 1000.ms),
+          SlideEffect(
+              begin: Offset(0, 0.02), end: Offset(0, 0.0), duration: 1000.ms)
+        ],
+        child: Scaffold(
+            backgroundColor: Constants.appBlack,
+            body: SafeArea(
+                child: Container(
+              height: Constants.h,
+              width: Constants.w,
+              decoration: BoxDecoration(
+                  // gradient: LinearGradient(
+                  //     begin: Alignment.topRight,
+                  //     end: Alignment.bottomLeft,
+                  //     colors: [
+                  //   Constants.appLightGrey,
+                  //   Constants.appBlack,
+                  //   Constants.appBlack
+                  // ])
+
+                  ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 8, 8, 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        animatedStars(starDx, starDy),
+                        Text(
                           "Opens At Night",
                           style: GoogleFonts.nunito(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                               color: Colors.white),
                         ),
-                      ),
-                      Animate(
-                        effects: [
-                          FadeEffect(
-                              begin: 0.0,
-                              end: 1.0,
-                              duration: Duration(seconds: 2))
-                        ],
-                        child: Text(
+                        Text(
                           "Find Your Dream\nPerson.",
                           style: GoogleFonts.nunito(
                               fontSize: 32,
                               color: Colors.white,
                               fontWeight: FontWeight.w700),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Animate(
-                  effects: [FadeEffect(duration: Duration(seconds: 3))],
-                  child: Column(
+                  Column(
                     children: [
                       Text(
                         "I Am Interest In",
@@ -105,10 +96,7 @@ class _InitClassState extends State<InitClass> {
                       GenderSelectionButton(),
                     ],
                   ),
-                ),
-                Animate(
-                  effects: [FadeEffect(duration: Duration(seconds: 4))],
-                  child: Column(
+                  Column(
                     children: [
                       Text(
                         "Age Of My Partner",
@@ -140,18 +128,15 @@ class _InitClassState extends State<InitClass> {
                       ),
                     ],
                   ),
-                ),
-                Animate(
-                  effects: [
-                    SlideEffect(
-                        begin: Offset(0.0, -0.2),
-                        end: Offset(0.0, 0.0),
-                        duration: Duration(seconds: 2))
-                  ],
-                  child: Padding(
+                  Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setString('gender', state == 0 ? 'm' : "f");
+                        prefs.setString('age',
+                            "${(_values.start).round()}-${_values.end.round()}");
                         nextScreen(context, Login());
                       },
                       child: Container(
@@ -170,10 +155,10 @@ class _InitClassState extends State<InitClass> {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ))),
+                ],
+              ),
+            ))),
+      ),
     );
   }
 }
@@ -186,7 +171,7 @@ class GenderSelectionButton extends StatefulWidget {
 }
 
 class _GenderSelectionButtonState extends State<GenderSelectionButton> {
-  int state = 0; // default MEN;
+  // default MEN;
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +203,7 @@ class _GenderSelectionButtonState extends State<GenderSelectionButton> {
               ),
             ),
           ),
+          Gap(5),
           GestureDetector(
             onTap: () {
               state = 1;

@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:unsplash_client/unsplash_client.dart';
-
-import '../widgets/card.dart';
 
 List<String> numbers = [
   'https://images.unsplash.com/photo-1697441642505-0f4ce8fbe98a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MjAzMDF8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTgzMjc3MTZ8&ixlib=rb-4.0.3&q=80&w=200',
@@ -173,81 +172,125 @@ class _MatrixMatchState extends State<MatrixMatch> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<String>>(
-        valueListenable: _photoIds,
-        builder: (_, value, __) {
-          Size imgSize =
-              MediaQuery.of(context).orientation == Orientation.landscape
-                  ? Size(MediaQuery.of(context).size.width * .5,
-                      MediaQuery.of(context).size.height * .66)
-                  : Size(MediaQuery.of(context).size.width * .66,
-                      MediaQuery.of(context).size.height * .5);
-          imgSize = (widget.imageSize ?? imgSize) * _scale;
-          // Get transform offset for the current _index
-          final padding = 24.0;
-          var gridOffset = _calculateCurrentOffset(padding, imgSize);
-          gridOffset += Offset(0, -MediaQuery.of(context).padding.top / 2);
-          final offsetTweenDuration =
-              _skipNextOffsetTween ? Duration.zero : swipeDuration;
-          final cutoutTweenDuration =
-              _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
-          return _AnimatedCutoutOverlay(
-            animationKey: ValueKey(_index),
-            cutoutSize: imgSize,
-            swipeDir: _lastSwipeDir,
-            duration: cutoutTweenDuration,
-            opacity: _scale == 1 ? .7 : .5,
-            child: SafeArea(
-              bottom: false,
-              // Place content in overflow box, to allow it to flow outside the parent
-              child: OverflowBox(
-                maxWidth: _gridSize * imgSize.width + padding * (_gridSize - 1),
-                maxHeight:
-                    _gridSize * imgSize.height + padding * (_gridSize - 1),
-                alignment: Alignment.center,
-                // Detect swipes in order to change index
-                child: EightWaySwipeDetector(
-                  onSwipe: _handleSwipe,
-                  threshold: 30,
-                  // A tween animation builder moves from image to image based on current offset
-                  child: TweenAnimationBuilder<Offset>(
-                    tween: Tween(begin: gridOffset, end: gridOffset),
-                    duration: offsetTweenDuration,
-                    curve: Curves.easeOut,
-                    builder: (_, value, child) =>
-                        Transform.translate(offset: value, child: child),
-                    child: GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: _gridSize,
-                          childAspectRatio: imgSize.aspectRatio,
-                          mainAxisSpacing: padding,
-                          crossAxisSpacing: padding,
-                        ),
-                        itemCount: _imgCount,
-                        itemBuilder: (context, i) {
-                          return Container(
-                            height: imgSize.height,
-                            width: imgSize.width,
-                            child: CachedNetworkImage(
-                              imageUrl: numbers.elementAt(i),
-                              placeholder: (context, url) {
-                                return BlurHash(
-                                    hash: "L5H2EC=PM+yV0g-mq.wG9c010J}I");
-                              },
-                              fit: BoxFit.cover,
-                            ),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(6)),
-                          );
-                        }),
+    return Stack(children: [
+      ValueListenableBuilder<List<String>>(
+          valueListenable: _photoIds,
+          builder: (_, value, __) {
+            Size imgSize =
+                MediaQuery.of(context).orientation == Orientation.landscape
+                    ? Size(MediaQuery.of(context).size.width * .5,
+                        MediaQuery.of(context).size.height * .66)
+                    : Size(MediaQuery.of(context).size.width * .66,
+                        MediaQuery.of(context).size.height * .5);
+            imgSize = (widget.imageSize ?? imgSize) * _scale;
+            // Get transform offset for the current _index
+            final padding = 24.0;
+            var gridOffset = _calculateCurrentOffset(padding, imgSize);
+            gridOffset += Offset(0, -MediaQuery.of(context).padding.top / 2);
+            final offsetTweenDuration =
+                _skipNextOffsetTween ? Duration.zero : swipeDuration;
+            final cutoutTweenDuration =
+                _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
+            return _AnimatedCutoutOverlay(
+              animationKey: ValueKey(_index),
+              cutoutSize: imgSize,
+              swipeDir: _lastSwipeDir,
+              duration: cutoutTweenDuration,
+              opacity: _scale == 1 ? .7 : .5,
+              child: SafeArea(
+                bottom: false,
+                // Place content in overflow box, to allow it to flow outside the parent
+                child: OverflowBox(
+                  maxWidth:
+                      _gridSize * imgSize.width + padding * (_gridSize - 1),
+                  maxHeight:
+                      _gridSize * imgSize.height + padding * (_gridSize - 1),
+                  alignment: Alignment.center,
+                  // Detect swipes in order to change index
+                  child: EightWaySwipeDetector(
+                    onSwipe: _handleSwipe,
+                    threshold: 30,
+                    // A tween animation builder moves from image to image based on current offset
+                    child: TweenAnimationBuilder<Offset>(
+                      tween: Tween(begin: gridOffset, end: gridOffset),
+                      duration: offsetTweenDuration,
+                      curve: Curves.easeOut,
+                      builder: (_, value, child) =>
+                          Transform.translate(offset: value, child: child),
+                      child: GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: _gridSize,
+                            childAspectRatio: imgSize.aspectRatio,
+                            mainAxisSpacing: padding,
+                            crossAxisSpacing: padding,
+                          ),
+                          itemCount: _imgCount,
+                          itemBuilder: (context, i) {
+                            return Container(
+                              height: imgSize.height,
+                              width: imgSize.width,
+                              child: Stack(fit: StackFit.expand, children: [
+                                CachedNetworkImage(
+                                  imageUrl: numbers.elementAt(i),
+                                  placeholder: (context, url) {
+                                    return BlurHash(
+                                        hash: "L5H2EC=PM+yV0g-mq.wG9c010J}I");
+                                  },
+                                  fit: BoxFit.cover,
+                                ),
+                                Text("Dhruv Patidar",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(
+                                          color: Colors.white,
+                                          backgroundColor:
+                                              Colors.black.withOpacity(0.8),
+                                          fontWeight: FontWeight.w700,
+                                          decoration: TextDecoration.none,
+                                        ))
+                              ]),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(6)),
+                            );
+                          }),
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 32, 16, 0),
+        child: Align(
+          alignment: Alignment.topRight,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.map,
+                    color: Colors.white,
+                  )),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.emoji_events,
+                    color: Colors.white,
+                  )),
+              CircleAvatar(
+                radius: 20,
+                child: Container(),
+              )
+            ],
+          ),
+        ),
+      )
+    ]);
   }
 }
 

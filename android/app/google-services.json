@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "60930318154",
+    "project_id": "nightlifydatingapp",
+    "storage_bucket": "nightlifydatingapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60930318154:android:81c4a5313bc17f8c1a2bb3",
+        "android_client_info": {
+          "package_name": "com.example.nightlify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60930318154-1m58q786jet9020d5ga8h99gmt6jc5ui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nightlify",
+            "certificate_hash": "9e0bd31bdd78e57b84a16d54bf445ed9fd9aef79"
+          }
+        },
+        {
+          "client_id": "60930318154-vibh604mfav8g1kj1s4427pavs27nbin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb2JvYmDMHJibwdSQnzIzNTAGS6850saA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60930318154-vibh604mfav8g1kj1s4427pavs27nbin.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "60930318154-842u427e81e4hdm16tf8g07fska5nmrk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.nightlify.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
