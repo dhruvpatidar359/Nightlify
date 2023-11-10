@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Constants {
   static final appBlack = Color(0xff171A20);
@@ -8,3 +9,26 @@ class Constants {
   static double h = 0;
   static double w = 0;
 }
+
+List<String> interestList = [
+  "Photography",
+  "Gaming",
+  "Coding",
+  "Playing",
+  "Football",
+  "Swimming",
+  "Cooking",
+  "Music",
+  "Reading",
+  "Traveling",
+  "Art",
+  "Science",
+  "Dancing",
+  "Hiking",
+  "Yoga",
+  "Movies",
+  "Sports",
+  "Writing",
+  "Fishing",
+  "Shopping",
+];

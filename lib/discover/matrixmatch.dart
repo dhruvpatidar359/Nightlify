@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nightlify/user/profile/profile.dart';
+import 'package:nightlify/widgets/navigation.dart';
 import 'package:unsplash_client/unsplash_client.dart';
 
 List<String> numbers = [
@@ -282,9 +284,14 @@ class _MatrixMatchState extends State<MatrixMatch> {
                     Icons.emoji_events,
                     color: Colors.white,
                   )),
-              CircleAvatar(
-                radius: 20,
-                child: Container(),
+              GestureDetector(
+                onTap: () {
+                  nextScreen(context, UserProfile());
+                },
+                child: CircleAvatar(
+                  radius: 20,
+                  child: Container(),
+                ),
               )
             ],
           ),

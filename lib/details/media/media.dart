@@ -2,19 +2,25 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:geoflutterfire2/geoflutterfire2.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:nightlify/details/interest/interest.dart';
 import 'package:nightlify/details/media/bloc/media_bloc.dart';
 import 'package:nightlify/discover/discover.dart';
 import 'package:nightlify/widgets/navigation.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
-import '../constants/constants.dart';
+import '../../constants/constants.dart';
+import '../../firebase/data/firestoreRepository/firestore_repository.dart';
+import 'package:geolocator/geolocator.dart';
 
 class MediaAdd extends StatefulWidget {
   const MediaAdd({super.key});
@@ -24,12 +30,20 @@ class MediaAdd extends StatefulWidget {
 }
 
 class _MediaAddState extends State<MediaAdd> {
+  final FirestoreRepository _firestoreRepository = FirestoreRepository();
+
   late VideoPlayerController _videoPlayerController;
   bool isVideoPlayerInit = false;
   bool primaryImage = false;
+
   bool secondaryImage = false;
+
   bool primaryVideo = false;
   double progress = 0.85;
+
+  String primaryImageUrl = "";
+  String secondaryImageUrl = "";
+  String primaryVideoUrl = "";
 
   @override
   void dispose() {
@@ -145,7 +159,7 @@ class _MediaAddState extends State<MediaAdd> {
                                         MediaState state) {
                                       if (state is ImageMediaOneSuccessState) {
                                         primaryImage = true;
-
+                                        primaryImageUrl = state.url;
                                         return SizedBox(
                                           height: Constants.h / 3,
                                           width: Constants.w / 2.2,
@@ -280,6 +294,7 @@ class _MediaAddState extends State<MediaAdd> {
                                             ImageMediaOneDelete(primaryImage));
 
                                         primaryImage = false;
+                                        primaryImageUrl = "";
                                       },
                                       icon: Icon(Icons.delete,
                                           color: Constants.appBlue))
@@ -295,6 +310,7 @@ class _MediaAddState extends State<MediaAdd> {
                                         context.read<MediaBloc>().add(
                                             VideoMediaDelete(primaryVideo));
                                         primaryVideo = false;
+                                        primaryVideoUrl = "";
                                       },
                                       icon: Icon(Icons.delete,
                                           color: Constants.appBlue)),
@@ -329,6 +345,7 @@ class _MediaAddState extends State<MediaAdd> {
 
                                     if (state is VideoMediaSuccessState) {
                                       primaryVideo = true;
+                                      primaryVideoUrl = state.url;
                                       _videoPlayerController =
                                           VideoPlayerController.file(
                                               File(state.path))
@@ -460,6 +477,7 @@ class _MediaAddState extends State<MediaAdd> {
                                     builder: (context, state) {
                                       if (state is ImageMediaTwoSuccessState) {
                                         secondaryImage = true;
+                                        secondaryImageUrl = state.url;
                                         return SizedBox(
                                           height: Constants.h / 3,
                                           width: Constants.w / 2.2,
@@ -598,6 +616,7 @@ class _MediaAddState extends State<MediaAdd> {
                                             ImageMediaTwoDelete(
                                                 secondaryImage));
                                         secondaryImage = false;
+                                        secondaryImageUrl = "";
                                       },
                                       icon: Icon(Icons.delete,
                                           color: Constants.appBlue))
@@ -607,10 +626,62 @@ class _MediaAddState extends State<MediaAdd> {
                           ),
                           Gap(20),
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               if (primaryImage &&
                                   primaryVideo &&
                                   secondaryImage) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                        shadowColor: Colors.transparent,
+                                        surfaceTintColor: Colors.transparent,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        backgroundColor: Colors.transparent,
+                                        content: Center(
+                                          child: LoadingAnimationWidget
+                                              .threeArchedCircle(
+                                                  color: Colors.white,
+                                                  size: 36),
+                                        ));
+                                  },
+                                );
+
+                                FirebaseAuth _firebaseAuth =
+                                    FirebaseAuth.instance;
+                                final SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                String email =
+                                    _firebaseAuth.currentUser?.email ?? "";
+                                String name = prefs.getString('name') ?? "";
+                                final interests = filters;
+                                final geo = GeoFlutterFire();
+                                final position = await _determinePosition();
+                                final myLocation = geo.point(
+                                    latitude: position.latitude,
+                                    longitude: position.longitude);
+                                final primarypicurl = primaryImageUrl;
+                                final secondarypicurl = secondaryImageUrl;
+                                final videourl = primaryVideoUrl;
+                                final partnerAge = prefs.getString('age') ?? "";
+                                final username =
+                                    prefs.getString("username") ?? "";
+
+                                await _firestoreRepository.addUserToDb(
+                                    email,
+                                    name,
+                                    interests,
+                                    myLocation,
+                                    partnerAge,
+                                    username,
+                                    primarypicurl,
+                                    secondarypicurl,
+                                    videourl);
+                                await _firestoreRepository
+                                    .addUsername(username);
+                                Navigator.pop(context);
                                 nextScreenReplace(context, Discover());
                               } else {
                                 showDialog(
@@ -674,4 +745,41 @@ class _MediaAddState extends State<MediaAdd> {
                   )))),
     );
   }
+}
+
+Future<Position> _determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  // Test if location services are enabled.
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    // Location services are not enabled don't continue
+    // accessing the position and request users of the
+    // App to enable the location services.
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      // Permissions are denied, next time you could try
+      // requesting permissions again (this is also where
+      // Android's shouldShowRequestPermissionRationale
+      // returned true. According to Android guidelines
+      // your App should show an explanatory UI now.
+      return Future.error('Location permissions are denied');
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    // Permissions are denied forever, handle appropriately.
+    return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.');
+  }
+
+  // When we reach here, permissions are granted and we can
+  // continue accessing the position of the device.
+  return await Geolocator.getCurrentPosition();
 }

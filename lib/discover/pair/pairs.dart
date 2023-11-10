@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nightlify/constants/constants.dart';
 import 'package:nightlify/discover/pair/pair_card.dart';
+import 'package:nightlify/user/profile/profile.dart';
+import 'package:nightlify/widgets/navigation.dart';
 import 'package:unsplash_client/unsplash_client.dart';
 
 class Pairs extends StatefulWidget {
@@ -60,9 +62,14 @@ class _PairsState extends State<Pairs> {
                           Icons.emoji_events,
                           color: Colors.white,
                         )),
-                    CircleAvatar(
-                      radius: 20,
-                      child: Container(),
+                    GestureDetector(
+                      onTap: () {
+                        nextScreen(context, UserProfile());
+                      },
+                      child: CircleAvatar(
+                        radius: 20,
+                        child: Container(),
+                      ),
                     )
                   ],
                 ),

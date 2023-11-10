@@ -6,10 +6,13 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:nightlify/auth/bloc/auth_bloc.dart';
 import 'package:nightlify/auth/login.dart';
 import 'package:nightlify/constants/constants.dart';
-import 'package:nightlify/details/Welcome.dart';
+
+import 'package:nightlify/details/name/Welcome.dart';
 import 'package:nightlify/widgets/navigation.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../firebase/data/firestoreRepository/firestore_repository.dart';
 
 class NameEntry extends StatefulWidget {
   const NameEntry({super.key});
@@ -19,12 +22,17 @@ class NameEntry extends StatefulWidget {
 }
 
 class _NameEntryState extends State<NameEntry> {
-  TextEditingController _nametext = TextEditingController();
-  bool error = false;
+  TextEditingController _nameText = TextEditingController();
+  TextEditingController _userNameText = TextEditingController();
+  final FirestoreRepository _firestoreRepository = FirestoreRepository();
+  bool nameError = false;
+
+  String userNameErrorText = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Constants.appBlack,
       body: SafeArea(
         child: Padding(
@@ -105,9 +113,9 @@ class _NameEntryState extends State<NameEntry> {
 
                 cursorWidth: 1,
 
-                controller: _nametext,
+                controller: _nameText,
                 decoration: InputDecoration(
-                  errorText: error == true ? "name field is empty" : null,
+                  errorText: nameError == true ? "name field is empty" : null,
                   filled: true,
                   fillColor: Constants.appGrey,
                   hintText: "Enter your name",
@@ -125,7 +133,39 @@ class _NameEntryState extends State<NameEntry> {
               ),
               Gap(10),
               Text(
-                "This is how it will appear on your profile. Can't change it in the future.",
+                "* This is how it will appear on your profile. Can't change it in the future.",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              Gap(10),
+              TextField(
+                style: Theme.of(context).textTheme.titleSmall,
+                cursorColor: Colors.white,
+
+                // controller: controller,
+
+                cursorWidth: 1,
+
+                controller: _userNameText,
+                decoration: InputDecoration(
+                  errorText: userNameErrorText == "" ? null : userNameErrorText,
+                  filled: true,
+                  fillColor: Constants.appGrey,
+                  hintText: "Enter your username",
+                  labelStyle: Theme.of(context).textTheme.titleSmall,
+                  hintStyle: Theme.of(context).textTheme.titleSmall,
+                  contentPadding: EdgeInsets.all(16.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
+                  ),
+                ),
+              ),
+              Gap(10),
+              Text(
+                "* This must be unique",
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               Spacer(),
@@ -133,17 +173,54 @@ class _NameEntryState extends State<NameEntry> {
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap: () async {
-                    if (_nametext.text == "") {
-                      error = true;
-                      setState(() {});
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            shadowColor: Colors.transparent,
+                            surfaceTintColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            backgroundColor: Colors.transparent,
+                            content: Center(
+                              child: LoadingAnimationWidget.threeArchedCircle(
+                                  color: Colors.white, size: 36),
+                            ));
+                      },
+                    );
+
+                    bool alreadyTaken = await _firestoreRepository
+                        .isUsernameAlreadyTaken(_userNameText.text);
+
+                    Navigator.pop(context);
+
+                    if (_nameText.text == "" || _userNameText.text == "") {
+                      if (_nameText.text.isEmpty)
+                        nameError = true;
+                      else {
+                        nameError = false;
+                      }
+                      if (_userNameText.text.isEmpty) {
+                        userNameErrorText = "username field is empty";
+                      } else {
+                        userNameErrorText = "";
+                      }
+                    } else if (alreadyTaken) {
+                      print("i am here and i know the cause");
+                      nameError = false;
+
+                      userNameErrorText = "username already taken";
                     } else {
-                      error = false;
-                      setState(() {});
+                      userNameErrorText = "";
+                      nameError = false;
                       final SharedPreferences prefs =
                           await SharedPreferences.getInstance();
-                      prefs.setString("name", _nametext.text);
+                      await prefs.setString("name", _nameText.text);
+                      await prefs.setString("username", _userNameText.text);
+
                       nextScreen(context, Welcome());
                     }
+                    setState(() {});
                   },
                   child: Container(
                     height: Constants.h / 12,

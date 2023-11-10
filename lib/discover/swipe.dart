@@ -7,6 +7,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlify/PartnerDetail/partnerdetails.dart';
+import 'package:nightlify/user/profile/profile.dart';
 import 'package:nightlify/widgets/card.dart';
 import 'package:nightlify/widgets/navigation.dart';
 import 'package:random_avatar/random_avatar.dart';
@@ -54,9 +55,14 @@ class _SwipeMatchState extends State<SwipeMatch> {
                         Icons.emoji_events,
                         color: Colors.white,
                       )),
-                  CircleAvatar(
-                    radius: 20,
-                    child: Container(),
+                  GestureDetector(
+                    onTap: () {
+                      nextScreen(context, UserProfile());
+                    },
+                    child: CircleAvatar(
+                      radius: 20,
+                      child: Container(),
+                    ),
                   )
                 ],
               ),

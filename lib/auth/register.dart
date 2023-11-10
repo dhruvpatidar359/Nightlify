@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,10 +9,13 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:nightlify/auth/bloc/auth_bloc.dart';
 import 'package:nightlify/auth/login.dart';
 import 'package:nightlify/constants/constants.dart';
-import 'package:nightlify/details/Welcome.dart';
-import 'package:nightlify/details/interest.dart';
-import 'package:nightlify/details/name.dart';
+
+import 'package:nightlify/details/name/Welcome.dart';
+import 'package:nightlify/details/name/name.dart';
+import 'package:nightlify/discover/discover.dart';
 import 'package:nightlify/widgets/navigation.dart';
+
+import '../firebase/data/firestoreRepository/firestore_repository.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -23,6 +27,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   bool _obscureText = true;
   bool _checkBox = false;
+  bool isChecked = false;
 
   TextEditingController _passwordText = TextEditingController();
   TextEditingController _emailText = TextEditingController();
@@ -31,6 +36,9 @@ class _RegisterState extends State<Register> {
   String? errorEmail = null;
   String? errorPassword = null;
   String? errorDidNotMatch = null;
+
+  final FirestoreRepository firestoreRepository = FirestoreRepository();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   validatePassword(String value) {
     RegExp regex =
@@ -58,6 +66,14 @@ class _RegisterState extends State<Register> {
       errorDidNotMatch = "Password did't match";
     else
       errorDidNotMatch = null;
+  }
+
+  validateCheck() {
+    if (_checkBox) {
+      isChecked = false;
+    } else {
+      isChecked = true;
+    }
   }
 
   @override
@@ -142,6 +158,7 @@ class _RegisterState extends State<Register> {
                           children: [
                             Checkbox(
                               activeColor: Constants.appBlue,
+                              isError: isChecked,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5)),
                               onChanged: (value) {
@@ -193,7 +210,7 @@ class _RegisterState extends State<Register> {
                               return false;
                             }
                           },
-                          listener: (context, state) {
+                          listener: (context, state) async {
                             if (state is EmailPasswordRegisterFailedState) {
                               Navigator.pop(context);
                               showDialog(
@@ -255,7 +272,15 @@ class _RegisterState extends State<Register> {
                             } else if (state
                                 is EmailPasswordRegisterSuccessState) {
                               Navigator.pop(context);
-                              nextScreenReplace(context, Welcome());
+                              final uid = firebaseAuth.currentUser?.uid ?? "";
+                              bool haveFilled = await firestoreRepository
+                                  .hasUserAlreadyGivenTheDetails(uid);
+                              Navigator.pop(context);
+                              if (haveFilled) {
+                                nextScreenReplace(context, Discover());
+                              } else {
+                                nextScreenReplace(context, NameEntry());
+                              }
                             }
                           },
                           child: TextButton(
@@ -264,10 +289,13 @@ class _RegisterState extends State<Register> {
                                 validatePassword(_passwordText.text);
                                 validateEmail(_emailText.text);
                                 validateMatch();
+                                validateCheck();
+
                                 setState(() {});
                                 if (errorEmail == null &&
                                     errorDidNotMatch == null &&
-                                    errorPassword == null) {
+                                    errorPassword == null &&
+                                    _checkBox) {
                                   context.read<AuthBloc>().add(
                                       EmailPasswordRegisterEvent(
                                           email: _emailText.text,
@@ -305,11 +333,20 @@ class _RegisterState extends State<Register> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             BlocListener<AuthBloc, AuthState>(
-                              listener: (context, state) {
+                              listener: (context, state) async {
                                 switch (state.runtimeType) {
                                   case GoogleAuthSuccessState:
                                     Navigator.pop(context);
-                                    nextScreenReplace(context, NameEntry());
+                                    final uid =
+                                        firebaseAuth.currentUser?.uid ?? "";
+                                    bool haveFilled = await firestoreRepository
+                                        .hasUserAlreadyGivenTheDetails(uid);
+                                    Navigator.pop(context);
+                                    if (haveFilled) {
+                                      nextScreenReplace(context, Discover());
+                                    } else {
+                                      nextScreenReplace(context, NameEntry());
+                                    }
                                     return;
 
                                   case GoogleAuthLoadingState:

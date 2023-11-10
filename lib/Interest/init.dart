@@ -46,17 +46,6 @@ class _InitClassState extends State<InitClass> {
                 child: Container(
               height: Constants.h,
               width: Constants.w,
-              decoration: BoxDecoration(
-                  // gradient: LinearGradient(
-                  //     begin: Alignment.topRight,
-                  //     end: Alignment.bottomLeft,
-                  //     colors: [
-                  //   Constants.appLightGrey,
-                  //   Constants.appBlack,
-                  //   Constants.appBlack
-                  // ])
-
-                  ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -134,10 +123,11 @@ class _InitClassState extends State<InitClass> {
                       onTap: () async {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
-                        prefs.setString('gender', state == 0 ? 'm' : "f");
-                        prefs.setString('age',
+                        await prefs.setString('gender', state == 0 ? 'm' : "f");
+                        await prefs.setString('age',
                             "${(_values.start).round()}-${_values.end.round()}");
-                        nextScreen(context, Login());
+
+                        nextScreenReplace(context, Login());
                       },
                       child: Container(
                         height: Constants.h / 12,

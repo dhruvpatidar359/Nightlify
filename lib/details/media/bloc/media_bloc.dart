@@ -29,15 +29,14 @@ class MediaBloc extends Bloc<MediaEvents, MediaState> {
         if (path == "") {
           emit(NoMediaOneState());
         } else {
-          refToMediaOneUpload = storageRef
-              .child("images/${user?.uid}/primaryImage")
-              .putFile(File(path));
+          final ref = storageRef.child("images/${user?.uid}/primaryImage");
+          refToMediaOneUpload = ref.putFile(File(path));
 
           // ref is in user (open ha bro)
           refOneClosed = false;
 
           refToMediaOneUpload.snapshotEvents
-              .listen((TaskSnapshot taskSnapshot) {
+              .listen((TaskSnapshot taskSnapshot) async {
             switch (taskSnapshot.state) {
               case TaskState.running:
                 final progress =
@@ -62,7 +61,8 @@ class MediaBloc extends Bloc<MediaEvents, MediaState> {
                 break;
               case TaskState.success:
                 emit(GotImageOneState());
-                emit(ImageMediaOneSuccessState(path));
+                String url = await ref.getDownloadURL();
+                emit(ImageMediaOneSuccessState(path, url));
                 refOneClosed = true;
                 // Handle successful uploads on complete
                 // ...
@@ -94,13 +94,12 @@ class MediaBloc extends Bloc<MediaEvents, MediaState> {
         if (path == "") {
           emit(NoMediaTwoState());
         } else {
-          refToMediaTwoUpload = storageRef
-              .child("images/${user?.uid}/secondaryImage")
-              .putFile(File(path));
+          final ref = storageRef.child("images/${user?.uid}/secondaryImage");
+          refToMediaTwoUpload = ref.putFile(File(path));
 
           refTwoClosed = true;
           refToMediaTwoUpload.snapshotEvents
-              .listen((TaskSnapshot taskSnapshot) {
+              .listen((TaskSnapshot taskSnapshot) async {
             switch (taskSnapshot.state) {
               case TaskState.running:
                 final progress =
@@ -124,7 +123,8 @@ class MediaBloc extends Bloc<MediaEvents, MediaState> {
                 break;
               case TaskState.success:
                 emit(GotImageTwoState());
-                emit(ImageMediaTwoSuccessState(path));
+                String url = await ref.getDownloadURL();
+                emit(ImageMediaTwoSuccessState(path, url));
 
                 refTwoClosed = true;
                 // Handle successful uploads on complete
@@ -157,9 +157,8 @@ class MediaBloc extends Bloc<MediaEvents, MediaState> {
       if (path == "") {
         emit(NoMediaThreeState());
       } else {
-        refToMediaThreeUpload = storageRef
-            .child("images/${user?.uid}/primaryVideo")
-            .putFile(File(path));
+        final ref = storageRef.child("images/${user?.uid}/primaryVideo");
+        refToMediaThreeUpload = ref.putFile(File(path));
 
         refThreeClose = false;
 
@@ -189,7 +188,8 @@ class MediaBloc extends Bloc<MediaEvents, MediaState> {
               break;
             case TaskState.success:
               emit(GotVideoState());
-              emit(VideoMediaSuccessState(path));
+              String url = await ref.getDownloadURL();
+              emit(VideoMediaSuccessState(path, url));
 
               refThreeClose = true;
 

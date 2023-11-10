@@ -4,10 +4,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepository {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future<String> signInWithGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
 
@@ -68,7 +67,16 @@ class AuthRepository {
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
-    debugPrint("sign Out");
+    try {
+      await googleSignIn.disconnect();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

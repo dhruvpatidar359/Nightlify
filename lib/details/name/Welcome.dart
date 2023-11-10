@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nightlify/constants/constants.dart';
-import 'package:nightlify/details/interest.dart';
+import 'package:nightlify/details/interest/interest.dart';
 import 'package:nightlify/widgets/navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

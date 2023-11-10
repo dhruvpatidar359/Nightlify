@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,9 +8,11 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:nightlify/auth/bloc/auth_bloc.dart';
 import 'package:nightlify/auth/register.dart';
 import 'package:nightlify/constants/constants.dart';
-import 'package:nightlify/details/Welcome.dart';
-import 'package:nightlify/details/interest.dart';
-import 'package:nightlify/details/name.dart';
+
+import 'package:nightlify/details/name/Welcome.dart';
+import 'package:nightlify/details/name/name.dart';
+import 'package:nightlify/discover/discover.dart';
+import 'package:nightlify/firebase/data/firestoreRepository/firestore_repository.dart';
 
 import 'package:nightlify/widgets/navigation.dart';
 
@@ -25,6 +28,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool _obscureText = true;
+
+  final FirestoreRepository firestoreRepository = FirestoreRepository();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +105,8 @@ class _LoginState extends State<Login> {
                               return true;
                             return false;
                           },
-                          listener: (BuildContext context, AuthState state) {
+                          listener:
+                              (BuildContext context, AuthState state) async {
                             if (state is EmailPasswordLoginLoadingState) {
                               showDialog(
                                 context: context,
@@ -120,8 +127,15 @@ class _LoginState extends State<Login> {
                               );
                             } else if (state
                                 is EmailPasswordLoginSuccessState) {
+                              final uid = firebaseAuth.currentUser?.uid ?? "";
+                              bool haveFilled = await firestoreRepository
+                                  .hasUserAlreadyGivenTheDetails(uid);
                               Navigator.pop(context);
-                              nextScreenReplace(context, Welcome());
+                              if (haveFilled) {
+                                nextScreenReplace(context, Discover());
+                              } else {
+                                nextScreenReplace(context, NameEntry());
+                              }
                             } else if (state is EmailPasswordLoginFailedState) {
                               Navigator.pop(context);
                               showDialog(
@@ -210,12 +224,22 @@ class _LoginState extends State<Login> {
                                   return false;
                                 }
                               },
-                              listener: (context, state) {
+                              listener: (context, state) async {
                                 print(state);
                                 switch (state.runtimeType) {
                                   case GoogleAuthSuccessState:
                                     Navigator.pop(context);
-                                    nextScreenReplace(context, NameEntry());
+                                    final uid =
+                                        firebaseAuth.currentUser?.uid ?? "";
+                                    bool haveFilled = await firestoreRepository
+                                        .hasUserAlreadyGivenTheDetails(uid);
+                                    Navigator.pop(context);
+                                    if (haveFilled) {
+                                      nextScreenReplace(context, Discover());
+                                    } else {
+                                      nextScreenReplace(context, NameEntry());
+                                    }
+
                                     return;
 
                                   case GoogleAuthLoadingState:

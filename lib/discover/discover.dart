@@ -5,8 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nightlify/constants/constants.dart';
 import 'package:nightlify/discover/bloc/discover_bloc.dart';
+import 'package:nightlify/discover/chat/chats.dart';
 import 'package:nightlify/discover/matrixmatch.dart';
 import 'package:nightlify/discover/pair/pairs.dart';
+import 'package:nightlify/discover/search/serach.dart';
 import 'package:nightlify/discover/swipe.dart';
 import 'package:random_avatar/random_avatar.dart';
 
@@ -28,15 +30,11 @@ class _DiscoverState extends State<Discover> {
         builder: (context, state) {
           switch (state.props.first as int) {
             case 0:
-              return Container(
-                color: Colors.white,
-              );
+              return Search();
             case 1:
               return MatrixMatch();
             case 2:
-              return Container(
-                child: Center(child: Text("Coming soon")),
-              );
+              return Chat();
             case 3:
               return SwipeMatch();
 
