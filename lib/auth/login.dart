@@ -145,6 +145,7 @@ class _LoginState extends State<Login> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
+                                    surfaceTintColor: Constants.appBlack,
                                     backgroundColor: Constants.appBlack,
                                     title: Text(
                                       'Login Failed',

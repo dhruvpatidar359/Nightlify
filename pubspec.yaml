@@ -77,6 +77,8 @@ dependencies:
   flutter_svg: ^2.0.9
   flutter_carousel_widget: ^2.1.2
   geolocator: ^10.1.0
+  csc_picker: ^0.2.7
+
 
 
 

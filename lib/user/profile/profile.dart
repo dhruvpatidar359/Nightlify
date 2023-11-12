@@ -10,6 +10,7 @@ import 'package:nightlify/auth/bloc/auth_bloc.dart';
 import 'package:nightlify/auth/login.dart';
 import 'package:nightlify/constants/constants.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:nightlify/user/profile/edit_profile.dart';
 import 'package:nightlify/widgets/navigation.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -22,6 +23,9 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  bool ageEnable = false;
+  bool bioEnable = false;
+
   @override
   Widget build(BuildContext context) {
     return Animate(
@@ -168,9 +172,14 @@ class _UserProfileState extends State<UserProfile> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Icon(
-                                      FontAwesomeIcons.solidPenToSquare,
-                                      color: Colors.white,
+                                    GestureDetector(
+                                      onTap: () {
+                                        nextScreen(context, EditUserProfile());
+                                      },
+                                      child: Icon(
+                                        FontAwesomeIcons.solidPenToSquare,
+                                        color: Colors.white,
+                                      ),
                                     )
                                   ],
                                 ),
@@ -229,29 +238,15 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         Gap(10),
                         Container(
-                          height: Constants.h / 6,
                           width: Constants.w,
                           decoration: BoxDecoration(
                               color: Constants.appGrey,
                               borderRadius: BorderRadius.circular(30)),
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(12.0, 8, 0, 0),
+                            padding: const EdgeInsets.all(16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0.0, 12, 12, 0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        FontAwesomeIcons.solidPenToSquare,
-                                        color: Colors.white,
-                                      )
-                                    ],
-                                  ),
-                                ),
                                 Text(
                                   "Age",
                                   style: Theme.of(context)
@@ -281,23 +276,43 @@ class _UserProfileState extends State<UserProfile> {
                               color: Constants.appGrey,
                               borderRadius: BorderRadius.circular(30)),
                           child: Padding(
-                            padding: const EdgeInsets.all(12.0),
+                            padding: const EdgeInsets.all(16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0.0, 12, 12, 0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        FontAwesomeIcons.solidPenToSquare,
-                                        color: Colors.white,
-                                      )
-                                    ],
-                                  ),
+                                Text(
+                                  "PartnerAge",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
                                 ),
+                                Text(
+                                  "19",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Gap(10),
+                        Container(
+                          width: Constants.w,
+                          decoration: BoxDecoration(
+                              color: Constants.appGrey,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                                 Text(
                                   "Bio",
                                   style: Theme.of(context)
@@ -327,23 +342,10 @@ class _UserProfileState extends State<UserProfile> {
                               color: Constants.appGrey,
                               borderRadius: BorderRadius.circular(30)),
                           child: Padding(
-                            padding: const EdgeInsets.all(12.0),
+                            padding: const EdgeInsets.all(16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0.0, 12, 12, 0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        FontAwesomeIcons.solidPenToSquare,
-                                        color: Colors.white,
-                                      )
-                                    ],
-                                  ),
-                                ),
                                 Text(
                                   "Language",
                                   style: Theme.of(context)
@@ -408,23 +410,10 @@ class _UserProfileState extends State<UserProfile> {
                               color: Constants.appGrey,
                               borderRadius: BorderRadius.circular(30)),
                           child: Padding(
-                            padding: const EdgeInsets.all(12.0),
+                            padding: const EdgeInsets.all(16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0.0, 12, 12, 0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        FontAwesomeIcons.solidPenToSquare,
-                                        color: Colors.white,
-                                      )
-                                    ],
-                                  ),
-                                ),
                                 Text(
                                   "Interests",
                                   style: Theme.of(context)
@@ -447,6 +436,7 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                         ),
+                        Gap(10),
                         Gap(10),
                         GestureDetector(
                           onTap: () {

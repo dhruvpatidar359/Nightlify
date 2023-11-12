@@ -55,7 +55,6 @@ class _NameEntryState extends State<NameEntry> {
                     listener: (BuildContext context, AuthState state) {
                       print(state);
                       if (state is UnAuthenticated) {
-                        Navigator.pop(context);
                         nextScreenReplace(context, Login());
                       } else {
                         showDialog(
