@@ -132,7 +132,7 @@ class _LoginState extends State<Login> {
                                   .hasUserAlreadyGivenTheDetails(uid);
                               Navigator.pop(context);
                               if (haveFilled) {
-                                nextScreenReplace(context, Discover());
+                                nextScreen(context, Discover());
                               } else {
                                 nextScreenReplace(context, NameEntry());
                               }
@@ -236,7 +236,7 @@ class _LoginState extends State<Login> {
                                         .hasUserAlreadyGivenTheDetails(uid);
                                     Navigator.pop(context);
                                     if (haveFilled) {
-                                      nextScreenReplace(context, Discover());
+                                      nextScreen(context, Discover());
                                     } else {
                                       nextScreenReplace(context, NameEntry());
                                     }

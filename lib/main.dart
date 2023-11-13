@@ -14,6 +14,7 @@ import 'package:nightlify/details/media/data/mediaRepository/mediaRepository.dar
 import 'package:nightlify/discover/bloc/discover_bloc.dart';
 import 'package:nightlify/discover/discover.dart';
 import 'package:nightlify/firebase/data/firestoreRepository/firestore_repository.dart';
+import 'package:nightlify/user/profilebloc/profile_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase_options.dart';
@@ -21,6 +22,7 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   Animate.restartOnHotReload = true;
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -80,6 +82,13 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) {
               return DiscoverBloc();
+            },
+          ),
+          BlocProvider(
+            create: (context) {
+              return ProfileBloc(
+                  fireStoreRepository:
+                      RepositoryProvider.of<FirestoreRepository>(context));
             },
           ),
         ],

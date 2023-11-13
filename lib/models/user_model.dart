@@ -28,7 +28,7 @@ class UserModel {
   String state;
   GeoFirePoint location;
   int age;
-  int partnerAge;
+  String partnerAge;
   String bio;
   List<LanguageModel> languages;
   List<String> interests;

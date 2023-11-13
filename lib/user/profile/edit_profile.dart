@@ -13,10 +13,7 @@ class LanguageModel {
   double proficiency;
 }
 
-List<LanguageModel> languages = [
-  LanguageModel("English", 10),
-  LanguageModel("Russian", 20)
-];
+List<LanguageModel> languages = [];
 
 class EditUserProfile extends StatefulWidget {
   const EditUserProfile({super.key});
@@ -315,16 +312,19 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           onCountryChanged: (value) {
                             setState(() {
                               // countryValue = value;
+                              country = value;
                             });
                           },
                           onStateChanged: (value) {
                             setState(() {
                               // stateValue = value;
+                              state = value ?? "";
                             });
                           },
                           onCityChanged: (value) {
                             setState(() {
                               // cityValue = value;
+                              city = value ?? "";
                             });
                           },
                         ),
@@ -650,9 +650,18 @@ class _EditUserProfileState extends State<EditUserProfile> {
                     String name = _nameTextField.text;
                     int age = int.parse(_ageTextField.text);
                     String bio = _bioTextField.text;
+                    String partnerAge = _partnerAgeTextField.text;
 
-                    await firestoreRepository.updateUserProfile(avatarString,
-                        name, city, country, state, languages, age, bio);
+                    await firestoreRepository.updateUserProfile(
+                        avatarString,
+                        name,
+                        city,
+                        country,
+                        state,
+                        partnerAge,
+                        languages,
+                        age,
+                        bio);
                   },
                   child: Container(
                     alignment: Alignment.center,

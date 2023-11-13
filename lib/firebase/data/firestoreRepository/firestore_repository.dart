@@ -84,6 +84,7 @@ class FirestoreRepository {
       String city,
       String country,
       String state,
+      String partnerAge,
       List<LanguageModel> languages,
       int age,
       String bio) async {
@@ -95,6 +96,7 @@ class FirestoreRepository {
       "Country": country,
       "State": state,
       "Age": age,
+      "PartnerAge": partnerAge,
       "Bio": bio,
       "Languages": languages.toMap()
     });
@@ -113,7 +115,7 @@ class FirestoreRepository {
     CollectionReference ref = db.collection(userRef);
     final documentSnapShot = await ref.doc(user?.uid).get();
     final docuMap = documentSnapShot.data() as Map<String, dynamic>;
-
+// print()
     return UserModel(
       name: docuMap["Name"] ?? "",
       userName: docuMap["Username"] ?? "",
@@ -126,10 +128,12 @@ class FirestoreRepository {
         docuMap['Location']['geopoint'].longitude,
       ),
       age: docuMap["Age"] ?? 0,
-      partnerAge: docuMap["PartnerAge"] ?? 0,
+      partnerAge: docuMap["PartnerAge"] ?? "40-80",
       bio: docuMap["Bio"] ?? "",
-      languages: (docuMap["Languages"] as Map<String, dynamic> ?? {}).toList(),
-      interests: (docuMap["Interests"] as List<dynamic> ?? []).cast<String>(),
+      languages: (docuMap["Languages"] as Map<String, dynamic>?) != null
+          ? (docuMap["Languages"] as Map<String, dynamic>).toList()
+          : [],
+      interests: ((docuMap["Interests"] ?? <List<String>>[])).cast<String>(),
       pimaryImage: docuMap["Primarypicurl"] ?? "",
       secondaryImage: docuMap["Secondarypicurl"] ?? "",
       primaryVideo: docuMap["Videourl"] ?? "",
