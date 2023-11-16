@@ -6,8 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nightlify/details/media/data/mediaRepository/mediaRepository.dart';
-part 'media_state.dart';
+
 part 'media_events.dart';
+part 'media_state.dart';
 
 class MediaBloc extends Bloc<MediaEvents, MediaState> {
   final MediaRepository mediaRepository;

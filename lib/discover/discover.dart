@@ -10,7 +10,6 @@ import 'package:nightlify/discover/matrixmatch.dart';
 import 'package:nightlify/discover/pair/pairs.dart';
 import 'package:nightlify/discover/search/serach.dart';
 import 'package:nightlify/discover/swipe.dart';
-import 'package:random_avatar/random_avatar.dart';
 
 class Discover extends StatefulWidget {
   const Discover({super.key});

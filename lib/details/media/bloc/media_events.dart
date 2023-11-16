@@ -22,7 +22,9 @@ class VideoMediaPick extends MediaEvents {
 
 class ImageMediaOneDelete extends MediaEvents {
   ImageMediaOneDelete(this.isPresent);
+
   final isPresent;
+
   @override
   // TODO: implement props
   List<Object?> get props => [];
@@ -30,7 +32,9 @@ class ImageMediaOneDelete extends MediaEvents {
 
 class ImageMediaTwoDelete extends MediaEvents {
   ImageMediaTwoDelete(this.isPresent);
+
   final isPresent;
+
   @override
   // TODO: implement props
   List<Object?> get props => [];
@@ -38,7 +42,9 @@ class ImageMediaTwoDelete extends MediaEvents {
 
 class VideoMediaDelete extends MediaEvents {
   VideoMediaDelete(this.isPresent);
+
   final isPresent;
+
   @override
   // TODO: implement props
   List<Object?> get props => [];

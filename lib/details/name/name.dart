@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -6,7 +5,6 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:nightlify/auth/bloc/auth_bloc.dart';
 import 'package:nightlify/auth/login.dart';
 import 'package:nightlify/constants/constants.dart';
-
 import 'package:nightlify/details/name/Welcome.dart';
 import 'package:nightlify/widgets/navigation.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';

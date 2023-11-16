@@ -21,7 +21,6 @@ import 'package:video_player/video_player.dart';
 
 import '../../constants/constants.dart';
 import '../../firebase/data/firestoreRepository/firestore_repository.dart';
-import 'package:geolocator/geolocator.dart';
 
 class MediaAdd extends StatefulWidget {
   const MediaAdd({super.key});

@@ -13,17 +13,17 @@
 #include <firebase_storage/firebase_storage_plugin_c_api.h>
 #include <geolocator_windows/geolocator_windows.h>
 
-void RegisterPlugins(flutter::PluginRegistry* registry) {
-  CloudFirestorePluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("CloudFirestorePluginCApi"));
-  FileSelectorWindowsRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FileSelectorWindows"));
-  FirebaseAuthPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FirebaseAuthPluginCApi"));
-  FirebaseCorePluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FirebaseCorePluginCApi"));
-  FirebaseStoragePluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FirebaseStoragePluginCApi"));
-  GeolocatorWindowsRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("GeolocatorWindows"));
+void RegisterPlugins(flutter::PluginRegistry *registry) {
+    CloudFirestorePluginCApiRegisterWithRegistrar(
+            registry->GetRegistrarForPlugin("CloudFirestorePluginCApi"));
+    FileSelectorWindowsRegisterWithRegistrar(
+            registry->GetRegistrarForPlugin("FileSelectorWindows"));
+    FirebaseAuthPluginCApiRegisterWithRegistrar(
+            registry->GetRegistrarForPlugin("FirebaseAuthPluginCApi"));
+    FirebaseCorePluginCApiRegisterWithRegistrar(
+            registry->GetRegistrarForPlugin("FirebaseCorePluginCApi"));
+    FirebaseStoragePluginCApiRegisterWithRegistrar(
+            registry->GetRegistrarForPlugin("FirebaseStoragePluginCApi"));
+    GeolocatorWindowsRegisterWithRegistrar(
+            registry->GetRegistrarForPlugin("GeolocatorWindows"));
 }

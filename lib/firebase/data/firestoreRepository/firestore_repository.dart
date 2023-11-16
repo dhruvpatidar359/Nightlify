@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geoflutterfire2/geoflutterfire2.dart';
-import 'package:nightlify/details/media/media.dart';
 import 'package:nightlify/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:unsplash_client/unsplash_client.dart';
 
 import '../../../GeolocatorServices/geolocatioservices.dart';
 import '../../../user/profile/edit_profile.dart';
@@ -141,17 +139,18 @@ class FirestoreRepository {
   }
 }
 
-extension LanguageListExtension on List<LanguageModel> {
+// extensions
+extension LanguageModelToMap on List<LanguageModel> {
   Map<String, double> toMap() {
     return Map.fromEntries(map((languageModel) =>
         MapEntry(languageModel.label, languageModel.proficiency)));
   }
 }
 
-extension LanguageListExtensiontwo on Map<String, dynamic> {
+extension LanguageModelToList on Map<String, dynamic> {
   List<LanguageModel> toList() {
     List<LanguageModel> list = [];
-    this.forEach((key, value) {
+    forEach((key, value) {
       list.add(LanguageModel(key, value));
     });
     return list;

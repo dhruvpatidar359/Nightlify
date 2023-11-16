@@ -11,7 +11,9 @@ class ProfileLoadingState extends ProfileState {
 
 class ProfileSuccessfullyLoaded extends ProfileState {
   ProfileSuccessfullyLoaded(this.userModel);
+
   UserModel userModel;
+
   @override
   // TODO: implement props
   List<Object?> get props => [userModel];

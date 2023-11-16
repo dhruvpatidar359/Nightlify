@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlify/user/profile/profile.dart';
 import 'package:nightlify/widgets/navigation.dart';
 import 'package:unsplash_client/unsplash_client.dart';
@@ -59,6 +58,7 @@ class _MatrixMatchState extends State<MatrixMatch> {
   );
 
   static const int _gridSize = 5;
+
   // Index starts in the middle of the grid (eg, 25 items, index will start at 13)
   int _index = ((_gridSize * _gridSize) / 2).round();
   Offset _lastSwipeDir = Offset.zero;
@@ -66,6 +66,7 @@ class _MatrixMatchState extends State<MatrixMatch> {
   bool _skipNextOffsetTween = false;
   late Duration swipeDuration = Duration(milliseconds: 1000) * .4;
   final _photoIds = ValueNotifier<List<String>>([]);
+
   int get _imgCount => pow(_gridSize, 2).round();
 
   @override
@@ -233,6 +234,9 @@ class _MatrixMatchState extends State<MatrixMatch> {
                             return Container(
                               height: imgSize.height,
                               width: imgSize.width,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(6)),
                               child: Stack(fit: StackFit.expand, children: [
                                 CachedNetworkImage(
                                   imageUrl: numbers.elementAt(i),
@@ -254,9 +258,6 @@ class _MatrixMatchState extends State<MatrixMatch> {
                                           decoration: TextDecoration.none,
                                         ))
                               ]),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(6)),
                             );
                           }),
                     ),
@@ -317,6 +318,7 @@ class _AnimatedCutoutOverlay extends StatelessWidget {
   final Offset swipeDir;
   final Duration? duration;
   final double opacity;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -353,6 +355,7 @@ class _AnimatedCutoutOverlay extends StatelessWidget {
 /// Creates an overlay with a hole in the middle of a certain size.
 class _CutoutClipper extends CustomClipper<Path> {
   _CutoutClipper(this.cutoutSize);
+
   final Size cutoutSize;
 
   @override

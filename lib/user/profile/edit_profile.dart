@@ -9,6 +9,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class LanguageModel {
   LanguageModel(this.label, this.proficiency);
+
   String label;
   double proficiency;
 }
@@ -37,6 +38,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
   String avatarText = "";
 
   final FirestoreRepository firestoreRepository = FirestoreRepository();
+
   @override
   void initState() {
     // TODO: implement initState

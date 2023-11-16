@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nightlify/auth/data/authRepository/authentication_repository.dart';
+
 part 'auth_event.dart';
 part 'auth_states.dart';
 

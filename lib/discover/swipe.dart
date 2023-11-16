@@ -1,16 +1,10 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlify/PartnerDetail/partnerdetails.dart';
 import 'package:nightlify/user/profile/profile.dart';
-import 'package:nightlify/widgets/card.dart';
+
 import 'package:nightlify/widgets/navigation.dart';
-import 'package:random_avatar/random_avatar.dart';
+import 'package:nightlify/widgets/partnerCard.dart';
 
 import '../constants/constants.dart';
 

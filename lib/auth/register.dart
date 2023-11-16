@@ -9,8 +9,6 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:nightlify/auth/bloc/auth_bloc.dart';
 import 'package:nightlify/auth/login.dart';
 import 'package:nightlify/constants/constants.dart';
-
-import 'package:nightlify/details/name/Welcome.dart';
 import 'package:nightlify/details/name/name.dart';
 import 'package:nightlify/discover/discover.dart';
 import 'package:nightlify/widgets/navigation.dart';
@@ -29,13 +27,13 @@ class _RegisterState extends State<Register> {
   bool _checkBox = false;
   bool isChecked = false;
 
-  TextEditingController _passwordText = TextEditingController();
-  TextEditingController _emailText = TextEditingController();
-  TextEditingController _repeatPasswordText = TextEditingController();
+  final TextEditingController _passwordText = TextEditingController();
+  final TextEditingController _emailText = TextEditingController();
+  final TextEditingController _repeatPasswordText = TextEditingController();
 
-  String? errorEmail = null;
-  String? errorPassword = null;
-  String? errorDidNotMatch = null;
+  String? errorEmail;
+  String? errorPassword;
+  String? errorDidNotMatch;
 
   final FirestoreRepository firestoreRepository = FirestoreRepository();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -55,17 +53,19 @@ class _RegisterState extends State<Register> {
   }
 
   validateEmail(String value) {
-    if (EmailValidator.validate(_emailText.text) == false)
+    if (EmailValidator.validate(_emailText.text) == false) {
       errorEmail = "email not valid";
-    else
+    } else {
       errorEmail = null;
+    }
   }
 
   validateMatch() {
-    if (_passwordText.text != _repeatPasswordText.text)
+    if (_passwordText.text != _repeatPasswordText.text) {
       errorDidNotMatch = "Password did't match";
-    else
+    } else {
       errorDidNotMatch = null;
+    }
   }
 
   validateCheck() {
@@ -82,7 +82,9 @@ class _RegisterState extends State<Register> {
       effects: [
         FadeEffect(begin: 0.0, end: 1.0, duration: 1000.ms),
         SlideEffect(
-            begin: Offset(0, 0.02), end: Offset(0, 0.0), duration: 1000.ms)
+            begin: const Offset(0, 0.02),
+            end: const Offset(0, 0.0),
+            duration: 1000.ms)
       ],
       child: Scaffold(
         backgroundColor: Constants.appBlack,

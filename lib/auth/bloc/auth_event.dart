@@ -11,6 +11,7 @@ class GoogleSignInEvent extends AuthEvent {
 class EmailPasswordRegisterEvent extends AuthEvent {
   final String email;
   final String password;
+
   EmailPasswordRegisterEvent({required this.email, required this.password});
 
   @override
@@ -21,6 +22,7 @@ class EmailPasswordRegisterEvent extends AuthEvent {
 class EmailPasswordLoginEvent extends AuthEvent {
   final String email;
   final String password;
+
   EmailPasswordLoginEvent({required this.email, required this.password});
 
   @override

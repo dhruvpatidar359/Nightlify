@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nightlify/Interest/init.dart';
 import 'package:nightlify/auth/bloc/auth_bloc.dart';
 import 'package:nightlify/auth/data/authRepository/authentication_repository.dart';
 import 'package:nightlify/constants/constants.dart';
@@ -14,6 +13,7 @@ import 'package:nightlify/details/media/data/mediaRepository/mediaRepository.dar
 import 'package:nightlify/discover/bloc/discover_bloc.dart';
 import 'package:nightlify/discover/discover.dart';
 import 'package:nightlify/firebase/data/firestoreRepository/firestore_repository.dart';
+import 'package:nightlify/init.dart';
 import 'package:nightlify/user/profilebloc/profile_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -133,7 +133,7 @@ class MyApp extends StatelessWidget {
             ),
             debugShowCheckedModeBanner: false,
             home: AnnotatedRegion<SystemUiOverlayStyle>(
-                value: SystemUiOverlayStyle(
+                value: const SystemUiOverlayStyle(
                   statusBarColor: Colors.transparent,
                   systemNavigationBarColor: Colors.black,
                   statusBarIconBrightness: Brightness.light,

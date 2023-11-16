@@ -22,6 +22,7 @@ class GoogleAuthSuccessState extends AuthState {
 
 class GoogleAuthFailedState extends AuthState {
   final String error;
+
   GoogleAuthFailedState(this.error);
 
   @override
@@ -71,6 +72,7 @@ class EmailPasswordLoginSuccessState extends AuthState {
 
 class EmailPasswordLoginFailedState extends AuthState {
   final String error;
+
   EmailPasswordLoginFailedState(this.error);
 
   @override

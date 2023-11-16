@@ -1,15 +1,12 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlify/PartnerDetail/zoomphoto.dart';
 import 'package:nightlify/constants/constants.dart';
-
 import 'package:video_player/video_player.dart';
 
 class PartnerDetail extends StatefulWidget {
@@ -28,6 +25,7 @@ class _PartnerDetailState extends State<PartnerDetail> {
     _controller = VideoPlayerController.networkUrl(Uri.parse(
         'https://firebasestorage.googleapis.com/v0/b/whatsappclone-588c8.appspot.com/o/profile_pic%2FWhatsApp%20Video%202023-10-28%20at%203.09.51%20PM.mp4?alt=media&token=fb993543-c8fa-4690-b567-7965b2f37bd0'))
       ..initialize().then((_) {
+        _controller.setLooping(true);
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });

@@ -1,10 +1,7 @@
-import 'dart:async';
 import 'dart:math';
-
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:timer_builder/timer_builder.dart';
+import 'package:flutter/material.dart';
 
 /*
 This file consist of the widgets that are required to make this app night themed .
@@ -136,6 +133,7 @@ class _FourPointedStarState extends State<FourPointedStar>
 class StarClipper extends CustomClipper<Path> {
   /// The number of points of the star
   final int points;
+
   StarClipper(this.points);
 
   // Degrees to radians conversion

@@ -1,10 +1,7 @@
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nightlify/constants/constants.dart';
 import 'package:nightlify/details/interest/interest.dart';
 import 'package:nightlify/widgets/navigation.dart';

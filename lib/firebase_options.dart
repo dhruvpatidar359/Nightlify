@@ -67,8 +67,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '60930318154',
     projectId: 'nightlifydatingapp',
     storageBucket: 'nightlifydatingapp.appspot.com',
-    androidClientId: '60930318154-1m58q786jet9020d5ga8h99gmt6jc5ui.apps.googleusercontent.com',
-    iosClientId: '60930318154-c6t6opsqj3e8pcal13gnp8lcqg53qbn4.apps.googleusercontent.com',
+    androidClientId:
+        '60930318154-1m58q786jet9020d5ga8h99gmt6jc5ui.apps.googleusercontent.com',
+    iosClientId:
+        '60930318154-c6t6opsqj3e8pcal13gnp8lcqg53qbn4.apps.googleusercontent.com',
     iosBundleId: 'com.example.nightlify',
   );
 
@@ -78,8 +80,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '60930318154',
     projectId: 'nightlifydatingapp',
     storageBucket: 'nightlifydatingapp.appspot.com',
-    androidClientId: '60930318154-1m58q786jet9020d5ga8h99gmt6jc5ui.apps.googleusercontent.com',
-    iosClientId: '60930318154-842u427e81e4hdm16tf8g07fska5nmrk.apps.googleusercontent.com',
+    androidClientId:
+        '60930318154-1m58q786jet9020d5ga8h99gmt6jc5ui.apps.googleusercontent.com',
+    iosClientId:
+        '60930318154-842u427e81e4hdm16tf8g07fska5nmrk.apps.googleusercontent.com',
     iosBundleId: 'com.example.nightlify.RunnerTests',
   );
 }

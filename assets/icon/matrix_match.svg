@@ -1,16 +1,26 @@
 <svg width="511" height="512" xmlns="http://www.w3.org/2000/svg">
- <title>swipe_card</title>
+    <title>swipe_card</title>
 
- <g>
-  <title>Layer 1</title>
-  <rect opacity="0" id="svg_1" height="289.99326" width="193.32884" y="86.65767" x="152.76493" stroke="#000" fill="#fff"/>
-  <path id="svg_2" d="m-262.56761,66.23348l3.18302,0l0.98358,-3.18297l0.98358,3.18297l3.18302,0l-2.57511,1.96716l0.98363,3.18297l-2.57511,-1.96722l-2.57511,1.96722l0.98363,-3.18297l-2.57511,-1.96716z" stroke="#000" fill="#fff"/>
-  <rect stroke="#000" rx="22" id="svg_3" height="329.99233" width="201.66199" y="101.21391" x="423.82941" fill="#fff"/>
-  <rect stroke="#000" rx="22" id="svg_4" height="334.99221" width="213.32837" y="94.54741" x="160.50218" fill="#fff"/>
-  <rect stroke="#000" rx="22" id="svg_5" height="329.99233" width="201.66199" y="96.21403" x="-97.82515" fill="#fff"/>
-  <rect transform="translate(-44.999 551.654)" stroke="#000" rx="22" id="svg_7" height="334.99221" width="213.32837" y="-93.78156" x="328.8316" fill="#fff"/>
-  <rect stroke="#000" rx="22" id="svg_8" height="334.99221" width="213.32837" y="-258.77773" x="305.49882" fill="#fff"/>
-  <rect stroke="#000" rx="22" id="svg_9" height="334.99221" width="213.32837" y="-255.44447" x="28.83858" fill="#fff"/>
-  <rect transform="translate(-44.999 551.654)" stroke="#000" rx="22" id="svg_10" height="334.99221" width="213.32837" y="-97.11481" x="73.83753" fill="#fff"/>
- </g>
+    <g>
+        <title>Layer 1</title>
+        <rect opacity="0" id="svg_1" height="289.99326" width="193.32884" y="86.65767" x="152.76493"
+            stroke="#000" fill="#fff" />
+        <path id="svg_2"
+            d="m-262.56761,66.23348l3.18302,0l0.98358,-3.18297l0.98358,3.18297l3.18302,0l-2.57511,1.96716l0.98363,3.18297l-2.57511,-1.96722l-2.57511,1.96722l0.98363,-3.18297l-2.57511,-1.96716z"
+            stroke="#000" fill="#fff" />
+        <rect stroke="#000" rx="22" id="svg_3" height="329.99233" width="201.66199" y="101.21391"
+            x="423.82941" fill="#fff" />
+        <rect stroke="#000" rx="22" id="svg_4" height="334.99221" width="213.32837" y="94.54741"
+            x="160.50218" fill="#fff" />
+        <rect stroke="#000" rx="22" id="svg_5" height="329.99233" width="201.66199" y="96.21403"
+            x="-97.82515" fill="#fff" />
+        <rect transform="translate(-44.999 551.654)" stroke="#000" rx="22" id="svg_7"
+            height="334.99221" width="213.32837" y="-93.78156" x="328.8316" fill="#fff" />
+        <rect stroke="#000" rx="22" id="svg_8" height="334.99221" width="213.32837" y="-258.77773"
+            x="305.49882" fill="#fff" />
+        <rect stroke="#000" rx="22" id="svg_9" height="334.99221" width="213.32837" y="-255.44447"
+            x="28.83858" fill="#fff" />
+        <rect transform="translate(-44.999 551.654)" stroke="#000" rx="22" id="svg_10"
+            height="334.99221" width="213.32837" y="-97.11481" x="73.83753" fill="#fff" />
+    </g>
 </svg>

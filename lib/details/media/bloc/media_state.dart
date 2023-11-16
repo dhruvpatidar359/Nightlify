@@ -20,8 +20,10 @@ class ImageMediaOneUploadingState extends MediaState {
 
 class ImageMediaOneSuccessState extends MediaState {
   ImageMediaOneSuccessState(this.path, this.url);
+
   final path;
   final String url;
+
   @override
   // TODO: implement props
   List<Object?> get props => [];
@@ -45,8 +47,10 @@ class ImageMediaTwoUploadingState extends MediaState {
 
 class ImageMediaTwoSuccessState extends MediaState {
   ImageMediaTwoSuccessState(this.path, this.url);
+
   final path;
   final String url;
+
   @override
   // TODO: implement props
   List<Object?> get props => [];
@@ -70,8 +74,10 @@ class VideoMediaUploadingState extends MediaState {
 
 class VideoMediaSuccessState extends MediaState {
   VideoMediaSuccessState(this.path, this.url);
+
   final path;
   final String url;
+
   @override
   // TODO: implement props
   List<Object?> get props => [];

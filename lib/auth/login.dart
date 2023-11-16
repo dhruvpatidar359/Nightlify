@@ -8,12 +8,9 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:nightlify/auth/bloc/auth_bloc.dart';
 import 'package:nightlify/auth/register.dart';
 import 'package:nightlify/constants/constants.dart';
-
-import 'package:nightlify/details/name/Welcome.dart';
 import 'package:nightlify/details/name/name.dart';
 import 'package:nightlify/discover/discover.dart';
 import 'package:nightlify/firebase/data/firestoreRepository/firestore_repository.dart';
-
 import 'package:nightlify/widgets/navigation.dart';
 
 TextEditingController _passwordText = TextEditingController();
